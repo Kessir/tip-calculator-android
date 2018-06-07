@@ -5,19 +5,21 @@ import android.arch.lifecycle.AndroidViewModel
 import android.databinding.Observable
 import android.databinding.PropertyChangeRegistry
 
+abstract class ObservableViewModel(app: Application) : AndroidViewModel(app), Observable {
 
-open class ObservableViewModel(app: Application): AndroidViewModel(app), Observable {
-    private val callbacks: PropertyChangeRegistry = PropertyChangeRegistry()
+    @delegate:Transient
+    private val callbacks: PropertyChangeRegistry by lazy { PropertyChangeRegistry() }
 
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
-        callbacks.add(callback)
+        callbacks.remove(callback)
     }
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
-        callbacks.remove(callback)
+        callbacks.add(callback)
     }
+
     fun notifyChange() {
-//        callbacks.notifyCallbacks(this, BR._all)
+        callbacks.notifyChange(this, 0)
     }
 
 }

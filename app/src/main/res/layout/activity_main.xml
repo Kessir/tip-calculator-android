@@ -29,8 +29,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/content_main"
-            app:vm = "@{vm}"/>
+        <include layout="@layout/content_main" app:vm = "@{vm}"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
